@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soal Materi Era Keemasan Islam - Ujian Online</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-hover: #115e59;
+            --bg: #f0fdf4;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --border: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #ccfbf1;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .timer {
+            color: var(--danger);
+            font-size: 18px;
+        }
+
+        .question-box {
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+        }
+
+        .validation-msg {
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Result styling */
+        .result-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .score-card {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-num {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .cheat-status {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 5px;
+            white-space: pre-line;
+        }
+
+        .cheat-jujur {
+            color: var(--success);
+        }
+
+        .cheat-curang {
+            color: var(--danger);
+        }
+
+        .review-item {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .review-q {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .user-ans-correct {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .user-ans-wrong {
+            color: var(--danger);
+            font-weight: 600;
+        }
+
+        .correct-ans {
+            color: var(--success);
+            font-weight: 600;
+            margin-top: 4px;
+            font-size: 14px;
+        }
+
+        .warning-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .warning-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .warning-card h3 {
+            color: var(--danger);
+            margin-bottom: 10px;
+        }
+
+        .warning-card button {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Warning Popup untuk Kecurangan -->
+    <div id="warning-popup" class="warning-overlay hidden">
+        <div class="warning-card">
+            <h3>Peringatan Kecurangan!</h3>
+            <p id="warning-message">Anda terdeteksi meninggalkan halaman ujian.</p>
+            <button class="btn" onclick="closeWarning()">Saya Mengerti</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Soal materi era keemasan islam</h1>
+            <p>Pengembang/Pembuat: Muhammad Naufal | Kota Cilegon</p>
+        </header>
+
+        <!-- Form Identitas -->
+        <div id="identity-section">
+            <div class="form-group">
+                <label for="fullname">Nama Lengkap</label>
+                <input type="text" id="fullname" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            <div class="form-group">
+                <label for="class-name">Kelas</label>
+                <input type="text" id="class-name" placeholder="Masukkan kelas Anda (contoh: XI IPA 2)" required>
+            </div>
+            <div class="form-group">
+                <label for="school">Sekolah</label>
+                <input type="text" id="school" placeholder="Masukkan nama sekolah Anda" required>
+            </div>
+            <div class="form-group">
+                <label for="subject-select">Mata Pelajaran</label>
+                <select id="subject-select">
+                    <option value="islamic_golden_age">Era Keemasan Islam (35 Soal)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="startQuiz()">Mulai Kerjakan Soal</button>
+        </div>
+
+        <!-- Area Ujian -->
+        <div id="quiz-section" class="hidden">
+            <div class="quiz-header">
+                <span id="question-number">Soal 1 dari 35</span>
+                <span class="timer" id="timer-display">90:00</span>
+            </div>
+
+            <div class="question-box">
+                <div class="question-text" id="question-text"></div>
+                <div class="options-container" id="options-container"></div>
+                <div class="validation-msg" id="validation-msg">⚠ Harap pilih salah satu jawaban terlebih dahulu sebelum melanjutkan!</div>
+            </div>
+
+            <button class="btn" id="next-btn" onclick="nextQuestion()">Selanjutnya</button>
+        </div>
+
+        <!-- Area Hasil -->
+        <div id="result-section" class="hidden">
+            <div class="result-title" id="completion-message"></div>
+            
+            <div class="score-card">
+                <div>Nilai Anda</div>
+                <div class="score-num" id="score-display">0</div>
+                <div id="cheat-status-display" class="cheat-status"></div>
+            </div>
+
+            <h3 style="margin-bottom: 15px;">Pembahasan & Corrected Answer:</h3>
+            <div id="review-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // Database 35 Soal Era Keemasan Islam (Dinasti Umayyah - Abbasiyah)
+        const islamicGoldenAgeQuestions = [
+            { q: "Pendiri Dinasti Umayyah yang berpusat di Damaskus pada tahun 661 M adalah...", a: ["Muawiyah bin Abu Sufyan", "Umar bin Abdul Aziz", "Abdul Malik bin Marwan", "Walid bin Abdul Malik"], c: 0 },
+            { q: "Kota yang menjadi ibu kota utama Dinasti Umayyah sebelum berpindah ke Andalusia adalah...", a: ["Baghdad", "Kufah", "Damaskus", "Kairo"], c: 2 },
+            { q: "Panglima Islam dari Dinasti Umayyah yang memimpin penaklukan Andalusia (Spanyol) pada tahun 711 M adalah...", a: ["Uqbah bin Nafi", "Tariq bin Ziyad", "Amr bin Ash", "Khalid bin Walid"], c: 1 },
+            { q: "Khalifah Umayyah yang terkenal sangat adil dan sering disebut sebagai Khulafaur Rasyidin kelima adalah...", a: ["Umar bin Abdul Aziz", "Yazid bin Muawiyah", "Marwan bin Hakam", "Hisham bin Abdul Malik"], c: 0 },
+            { q: "Pencetakan mata uang resmi beraksara Arab pertama kali dilakukan pada masa Khalifah Umayyah...", a: ["Muawiyah I", "Abdul Malik bin Marwan", "Suleiman bin Abdul Malik", "Walid I"], c: 1 },
+            { q: "Pendiri Dinasti Abbasiyah yang menggulingkan Dinasti Umayyah pada tahun 750 M adalah...", a: ["Abu Abbas As-Saffah", "Abu Ja'far Al-Mansur", "Harun Al-Rasyid", "Al-Ma'mun"], c: 0 },
+            { q: "Ibu kota Dinasti Abbasiyah yang dibangun oleh Khalifah Abu Ja'far Al-Mansur adalah...", a: ["Cordoba", "Baghdad", "Damaskus", "Yerusalem"], c: 1 },
+            { q: "Lembaga penerjemahan, perpustakaan, dan pusat penelitian terkenal pada masa Dinasti Abbasiyah adalah...", a: ["Baitul Hikmah", "Nizamiyyah", "Al-Azhar", "Darul Ulum"], c: 0 },
+            { q: "Khalifah Abbasiyah yang membawa dinasti ini mencapai puncak kejayaan ekonomi dan ilmu pengetahuan adalah...", a: ["Harun Al-Rasyid", "Al-Mutawakkil", "Al-Musta'sim", "Al-Mahdi"], c: 0 },
+            { q: "Ilmuwan Muslim pencetus ilmu Aljabar dan penemu angka nol yang hidup pada masa Abbasiyah adalah...", a: ["Al-Biruni", "Al-Khawarizmi", "Ibn al-Haytham", "Al-Kindi"], c: 1 },
+            { q: "Tokoh kedokteran Muslim pengarang kitab legendaris 'Al-Qanun fi at-Tibb' (The Canon of Medicine) adalah...", a: ["Ibnu Sina (Avicenna)", "Ibnu Rusyd", "Al-Razi", "Ibnu Nafis"], c: 0 },
+            { q: "Ilmuwan pakar fisika optik yang menulis kitab 'Kitab al-Manazir' adalah...", a: ["Ibn al-Haytham (Alhazen)", "Al-Farabi", "Al-Battani", "Jabir bin Hayyan"], c: 0 },
+            { q: "Bapak Kimia Islam yang terkenal dengan percobaan distilasi dan kristalisasi pada masa Abbasiyah adalah...", a: ["Jabir bin Hayyan", "Al-Kindi", "Ibnu Hazm", "Al-Ghazali"], c: 0 },
+            { q: "Filsuf Muslim pertama yang berusaha menyelaraskan filsafat Yunani dengan ajaran Islam adalah...", a: ["Al-Kindi", "Al-Farabi", "Ibnu Rusyd", "Al-Ghazali"], c: 0 },
+            { q: "Filsuf Muslim yang dijuluki 'Guru Kedua' (Second Teacher) setelah Aristoteles adalah...", a: ["Al-Farabi", "Ibnu Sina", "Al-Ghazali", "Ibnu Tufail"], c: 0 },
+            { q: "Karya monumental Syekh Al-Ghazali yang membela otoritas spiritual dan tasawuf adalah...", a: ["Ihya Ulumuddin", "Tahafut al-Falasifah", "Al-Mungidh min ad-Dalal", "Bidayatul Hidayah"], c: 0 },
+            { q: "Dinasti Umayyah II mendirikan kekhalifahan yang sangat maju di Semenanjung Iberia (Spanyol) berpusat di...", a: ["Sevilla", "Granada", "Cordoba", "Toledo"], c: 2 },
+            { q: "Pangeran Umayyah yang berhasil meloloskan diri ke Spanyol dan mendirikan Dinasti Umayyah di Cordoba adalah...", a: ["Abdul Rahman ad-Dakhil", "Hisham I", "Abdul Rahman III", "Al-Hakam II"], c: 0 },
+            { q: "Masjid megah berarsitektur indah yang dibangun pada masa Umayyah II di Spanyol adalah...", a: ["Masjid Agung Cordoba", "Masjid Istiqlal", "Masjid Raya Umayyah Damaskus", "Masjid Al-Aqsa"], c: 0 },
+            { q: "Istana megah peninggalan kejayaan Islam di Granada, Spanyol adalah...", a: ["Alhambra", "Alcazar", "Topkapi", "Taj Mahal"], c: 0 },
+            { q: "Madrasah Nizamiyyah yang didirikan oleh Wazir Nizam al-Mulk berada di bawah perlindungan dinasti pendukung Abbasiyah, yaitu...", a: ["Dinasti Seljuk", "Dinasti Buwaihi", "Dinasti Fatimiyah", "Dinasti Ayyubiyah"], c: 0 },
+            { q: "Pengarang kitab astronomi terkenal yang mengoreksi perhitungan sistem Ptolomeus adalah...", a: ["Al-Battani", "Al-Biruni", "Al-Sufi", "Al-Zarqali"], c: 0 },
+            { q: "Pengembara dan geografer Muslim terkemuka pada masa keemasan Islam yang mengelilingi dunia adalah...", a: ["Ibnu Battuta", "Ibnu Khaldun", "Al-Mas'udi", "Al-Idrisi"], c: 0 },
+            { q: "Sastrawan dan penyair terkenal masa Abbasiyah yang menghasilkan karya '1001 Malam' (Arabian Nights) ditulis dalam bahasa...", a: ["Arab", "Persia", "Turki", "Urdu"], c: 0 },
+            { q: "Bapak Sosiologi dan Sejarah Islam pengarang kitab 'Muqaddimah' adalah...", a: ["Ibnu Khaldun", "Ibnu Katsir", "At-Tabari", "Ibnu Athir"], c: 0 },
+            { q: "Cendekiawan Muslim yang menemukan sistem peredaran darah kecil pada manusia adalah...", a: ["Ibnu Nafis", "Ibnu Sina", "Al-Razi", "Ibnu Zuhr"], c: 0 },
+            { q: "Kota tempat dibangunnya Universitas Al-Qarawiyyin, perguruan tinggi tertua di dunia yang didirikan Fatimah al-Fihri adalah...", a: ["Fez (Maroko)", "Kairo (Mesir)", "Tunis (Tunisia)", "Baghdad (Irak)"], c: 0 },
+            { q: "Serangan bangsa Tartar/Mongol yang menghancurkan kota Baghdad dan mengakhiri Dinasti Abbasiyah dipimpin oleh...", a: ["Hulagu Khan", "Genghis Khan", "Timur Lenk", "Kubilai Khan"], c: 0 },
+            { q: "Kehancuran Baghdad dan runtuhnya Dinasti Abbasiyah secara resmi terjadi pada tahun...", a: ["1258 M", "1453 M", "1099 M", "750 M"], c: 0 },
+            { q: "Kumpulan kitab hadis shahih paling utama disusun pada masa keemasan Abbasiyah, di antaranya disusun oleh...", a: ["Imam Bukhari dan Imam Muslim", "Imam Malik dan Imam Syafi'i", "Imam Ahmad dan Abu Hanifah", "Imam Al-Ghazali"], c: 0 },
+            { q: "Empat Imam Mazhab Fikih Sunni berkembang pesat pada rentang masa Dinasti Umayyah hingga Abbasiyah, KECUALI...", a: ["Imam Ja'far ash-Shadiq", "Imam Abu Hanifah", "Imam Malik", "Imam Asy-Syafi'i"], c: 0 },
+            { q: "Sejarawan ternama penyusun kitab 'Tarikh al-Rusul wa al-Muluk' pada masa Abbasiyah adalah...", a: ["At-Tabari", "Ibnu Katsir", "Al-Mas'udi", "Ibnu Hajar"], c: 0 },
+            { q: "Pasukan elite atau sekretariat administrasi yang memegang peranan penting pada tata pemerintahan Umayyah disebut...", a: ["Diwan al-Kharaj / Diwan al-Khatam", "Baitul Maal", "Syurta", "Wizarat"], c: 0 },
+            { q: "Gaya seni hiasan kaligrafi dan ornamen geometris tanpa gambar makhluk hidup berkembang pesat di masa keemasan Islam yang disebut...", a: ["Arabeska", "Mosaik", "Relief", "Fresko"], c: 0 },
+            { q: "Pengaruh utama dari Zaman Keemasan Islam terhadap benua Eropa di kemudian hari memicu lahirnya era...", a: ["Renaissance (Pencerahan)", "Revolusi Industri", "Zaman Kegelapan", "Feodalisme"], c: 0 }
+        ];
+
+        // System Variables
+        let currentQuestion = 0;
+        let userAnswers = new Array(islamicGoldenAgeQuestions.length).fill(null);
+        let timerSeconds = 90 * 60; // 90 Menit
+        let timerInterval = null;
+        let timerStarted = false;
+        
+        // Security & Anti-Cheat Variables
+        let cheatCount = 0;
+        let cheatLogs = [];
+        let quizActive = false;
+
+        // User Data
+        let userData = { name: '', class: '', school: '' };
+
+        // DOM Elements
+        const identitySection = document.getElementById('identity-section');
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
+        const warningPopup = document.getElementById('warning-popup');
+        const warningMessage = document.getElementById('warning-message');
+        const validationMsg = document.getElementById('validation-msg');
+
+        function startQuiz() {
+            const name = document.getElementById('fullname').value.trim();
+            const className = document.getElementById('class-name').value.trim();
+            const school = document.getElementById('school').value.trim();
+
+            if (!name || !className || !school) {
+                alert('Mohon lengkapi Nama Lengkap, Kelas, dan Sekolah terlebih dahulu!');
+                return;
+            }
+
+            userData = { name, class: className, school };
+
+            identitySection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+
+            quizActive = true;
+            setupSecurity();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            if (timerStarted) return;
+            timerStarted = true;
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                
+                let mins = Math.floor(timerSeconds / 60);
+                let secs = timerSeconds % 60;
+                
+                document.getElementById('timer-display').innerText = 
+                    `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz("Waktu Habis");
+                }
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            validationMsg.style.display = 'none';
+            const qData = islamicGoldenAgeQuestions[currentQuestion];
+            document.getElementById('question-number').innerText = `Soal ${currentQuestion + 1} dari ${islamicGoldenAgeQuestions.length}`;
+            document.getElementById('question-text').innerText = `${currentQuestion + 1}. ${qData.q}`;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            qData.a.forEach((opt, idx) => {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'option';
+                radio.value = idx;
+                
+                if (userAnswers[currentQuestion] === idx) {
+                    radio.checked = true;
+                }
+
+                radio.onchange = () => {
+                    validationMsg.style.display = 'none';
+                    userAnswers[currentQuestion] = idx;
+                    // Timer 90 menit pas mulai saat diklik
+                    if (!timerStarted) {
+                        startTimer();
+                    }
+                };
+
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(opt));
+                optionsContainer.appendChild(label);
+            });
+
+            if (currentQuestion === islamicGoldenAgeQuestions.length - 1) {
+                document.getElementById('next-btn').innerText = 'Selesaikan Ujian';
+            } else {
+                document.getElementById('next-btn').innerText = 'Selanjutnya';
+            }
+        }
+
+        function nextQuestion() {
+            // Wajib diisi: jika belum pilih opsi maka ditahan
+            if (userAnswers[currentQuestion] === null) {
+                validationMsg.style.display = 'block';
+                return;
+            }
+
+            if (currentQuestion < islamicGoldenAgeQuestions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                finishQuiz("Selesai");
+            }
+        }
+
+        // Anti-Cheat System
+        function setupSecurity() {
+            document.addEventListener('visibilitychange', () => {
+                if (quizActive && document.hidden) {
+                    registerViolation("Keluar dari tab / berpindah aplikasi");
+                }
+            });
+
+            window.addEventListener('blur', () => {
+                if (quizActive) {
+                    registerViolation("Meninggalkan jendela halaman ujian");
+                }
+            });
+
+            document.addEventListener('contextmenu', (e) => {
+                if (quizActive) {
+                    e.preventDefault();
+                    registerViolation("Mencoba melakukan Klik Kanan");
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!quizActive) return;
+
+                if (
+                    e.key === "F12" || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                    (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
+                    (e.ctrlKey && (e.key === 'c' || e.key === 'C')) ||
+                    (e.ctrlKey && (e.key === 'v' || e.key === 'V'))
+                ) {
+                    e.preventDefault();
+                    registerViolation(`Mencoba pintasan keyboard (${e.key})`);
+                }
+            });
+        }
+
+        function registerViolation(reason) {
+            cheatCount++;
+            const timestamp = new Date().toLocaleTimeString();
+            cheatLogs.push(`[${timestamp}] ${reason}`);
+            
+            showWarning(`Peringatan Violasi Kecurangan #${cheatCount}: Anda terdeteksi ${reason}. Kebiasaan ini dicatat dan dilaporkan!`);
+            sendCheatReportToAdmin(reason);
+        }
+
+        function showWarning(msg) {
+            warningMessage.innerText = msg;
+            warningPopup.classList.remove('hidden');
+        }
+
+        function closeWarning() {
+            warningPopup.classList.add('hidden');
+        }
+
+        function sendCheatReportToAdmin(reason) {
+            const reportData = {
+                pengembang: "Muhammad Naufal (Cilegon)",
+                judulMapel: "Soal materi era keemasan islam",
+                siswa: userData,
+                alasan: reason,
+                totalViolations: cheatCount,
+                waktu: new Date().toLocaleString()
+            };
+            console.warn("PELANGGARAN DIKIRIM KE PEMEGANG WEB/MAPEL:", reportData);
+        }
+
+        function finishQuiz(statusReason) {
+            quizActive = false;
+            clearInterval(timerInterval);
+
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+
+            let correctCount = 0;
+            islamicGoldenAgeQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.c) {
+                    correctCount++;
+                }
+            });
+
+            let finalScore = Math.round((correctCount / islamicGoldenAgeQuestions.length) * 100);
+
+            document.getElementById('completion-message').innerText = 
+                `Selamat ${userData.name} soal telah selesai dan waktu sudah habis, ini adalah nilai anda`;
+
+            document.getElementById('score-display').innerText = finalScore;
+
+            const cheatDisplay = document.getElementById('cheat-status-display');
+            if (cheatCount === 0) {
+                cheatDisplay.innerText = "JUJUR";
+                cheatDisplay.className = "cheat-status cheat-jujur";
+            } else {
+                const uniqueReasons = [...new Set(cheatLogs)].join(", ");
+                cheatDisplay.innerText = `Terdeteksi Kecurangan (${cheatCount} Kali)\nAlasan: ${uniqueReasons}`;
+                cheatDisplay.className = "cheat-status cheat-curang";
+            }
+
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = '';
+
+            islamicGoldenAgeQuestions.forEach((q, idx) => {
+                const item = document.createElement('div');
+                item.className = 'review-item';
+
+                const userAnsIdx = userAnswers[idx];
+                const isCorrect = userAnsIdx === q.c;
+
+                let userAnsText = userAnsIdx !== null ? q.a[userAnsIdx] : 'Tidak Dijawab';
+                let correctAnsText = q.a[q.c];
+
+                let html = `<div class="review-q">${idx + 1}. ${q.q}</div>`;
+
+                if (isCorrect) {
+                    html += `<div class="user-ans-correct">Jawaban Anda: ${userAnsText} (Benar)</div>`;
+                } else {
+                    html += `<div class="user-ans-wrong">Jawaban Anda: ${userAnsText} (Salah)</div>`;
+                    html += `<div class="correct-ans">Jawaban yang Benar: ${correctAnsText}</div>`;
+                }
+
+                item.innerHTML = html;
+                reviewContainer.appendChild(item);
+            });
+        }
+    </script>
+</body>
+</html>
