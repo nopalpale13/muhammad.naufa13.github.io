@@ -1,2 +1,2 @@
-# muhammad.naufa13.github.io
+# muhammad.naufal13.github.io
 situs untuk mengerjakan soal
